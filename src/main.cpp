@@ -1,6 +1,6 @@
 #include "gif.h"
 #define SDL_MAIN_HANDLED
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 // Render methods will be implemented after main()
 void renderNormally(GifFile::GifFileReader& reader, SDL_Surface* drawCanvas, GifFile::GifFrame& currentFrame);
@@ -49,7 +49,7 @@ int main(int argc, const char *argv[]) {
     printf("Frame Info :\n");
     for (size_t i = 0; i < reader.frames.size(); i++) {
         auto &frame = reader.frames[i];
-        printf("Frame %i:\n", i);
+        printf("Frame %li:\n", i);
         printf("\tTime on Screen: %i\n", frame.delayTime);
         printf("\tClear Screen: %i\n", frame.clearBuffer);
         printf("\tWidth: %i Height: %i\n", frame.width, frame.height);

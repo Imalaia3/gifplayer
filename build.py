@@ -38,7 +38,7 @@ def target_all():
 
     elif isPosix():
         print("Linux / Linux-like Operating System detected.")
-        ret = runCommand(toSubproccessList(f"g++ {listToString(cppFiles)} -Wall -Wextra -Wpedantic -lSDL2 -o bin/reader.exe"), True)
+        ret = runCommand(toSubproccessList(f"g++ {listToString(cppFiles)} -Wall -Wextra -Wpedantic -lSDL2 -o bin/reader"), False)
         if ret.returncode != 0:
             print("g++ failed!")
             exit(1)

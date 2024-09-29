@@ -179,7 +179,7 @@ namespace GifFile {
                 break; // EOF has been reached
             fseek(m_file, -1, SEEK_CUR); // If, not EOF seek back so the other functions can handle this byte
         }
-        if(m_verbose) { printf("Stored all %i frames!\n",frames.size()); }
+        if(m_verbose) { printf("Stored all %li frames!\n",frames.size()); }
         
 
         fclose(m_file);

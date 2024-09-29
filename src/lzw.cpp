@@ -33,7 +33,7 @@ namespace GifLZW
     std::vector<uint32_t> LzwDecoder::decode(bool verbose) {
         std::vector<uint32_t> indexVector;
         
-        int32_t code = getNextValue();
+        uint32_t code = getNextValue();
         if (static_cast<uint32_t>(code) == m_clearCode) {
             initDictionary();
             code = getNextValue(); // Get next code, as a clear code shouldn't appear in the code stream or else things will break
@@ -41,7 +41,7 @@ namespace GifLZW
         } else {
             indexVector = m_dict[code];
         }
-        int32_t lastCode = code;
+        uint32_t lastCode = code;
         if (verbose) { printf("Clear Code: %i, EOI Code: %i\n",m_clearCode,m_endCode); }
 
         while (true) {
@@ -53,17 +53,19 @@ namespace GifLZW
                 printf("%#08x %#08x\n", m_reader.getBytePtr()[dbg_byteOffset], m_reader.getBytePtr()[dbg_byteOffset+1]);    
             }
 
-            if (static_cast<uint32_t>(code) == m_endCode)
+            if (code == m_endCode)
                 break;
-            if (static_cast<uint32_t>(code) == m_clearCode) {
+            if (code == m_clearCode) {
                 if (verbose) { printf("!!!! Reinitializing Dictionary !!!!\n"); }
 
                 initDictionary();
-                lastCode = -1; // -1 means NULL and states that a dictionary initialization has just happened and the next code is not encoded
-                continue;
-            }
-
-            if (lastCode == -1) {
+                
+                /* code is a clear code so invalidate it
+                 * and since every code after a clearCode
+                 * is a uncompressed code just output it
+                 * to the index stream
+                 */ 
+                code = getNextValue();
                 indexVector.push_back(code);
                 lastCode = code;
                 continue;
