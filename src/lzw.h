@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <stdint.h>
 #include <cstdio>
 #include <cmath>
@@ -59,7 +59,7 @@ namespace GifLZW {
         void initDictionary();
 
         BitStreamReader m_reader;
-        std::map<uint32_t, std::vector<uint32_t>> m_dict;
+        std::unordered_map<uint32_t, std::vector<uint32_t>> m_dict;
         // clear code: when this code appears in the stream, reset the dictionary to its original values
         // end code: when this code appears, no more bytes need to be decoded
         uint32_t m_clearCode, m_endCode;
