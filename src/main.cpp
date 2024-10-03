@@ -44,6 +44,7 @@ int main(int argc, const char *argv[]) {
     bool retVal = reader.readFile();
     if (retVal != 0) {
         printf("Reader failed!\n");
+        return EXIT_FAILURE;
     }
 
     printf("Frame Info :\n");
